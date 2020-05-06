@@ -29,7 +29,7 @@ export default {
   methods:{
     //获取列表数据
     async fetch(){
-       let tableDatas= await this.$http.get('/category')
+       let tableDatas= await this.$http.get('/rest/category')
        this.tableDatas=tableDatas.data       
     },
     async remove(row){
@@ -38,7 +38,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
         }).then(async() => {
-          await this.$http.delete(`/category/${row._id}`)
+          await this.$http.delete(`rest/category/${row._id}`)
           this.$message({
             type: 'success',
             message: '删除成功!'

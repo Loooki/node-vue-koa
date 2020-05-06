@@ -2,7 +2,8 @@ const Koa=require('koa')
 const cors=require('koa-cors')
 const bodyParser=require('koa-bodyparser')
 const static=require('koa-static')
-const admin=require('./routes/admin')
+// const admin=require('./routes/admin')
+const adminCURD = require('./routes/adminCURD')
 const web=require('./routes/web')
 // const DB=require('./plugins/db.js')
 
@@ -19,7 +20,8 @@ app.use(cors())
 //数据库连接中间件
 // app.use(DB)
 
-app.use(admin.routes(),admin.allowedMethods())
+app.use(adminCURD.routes(),adminCURD.allowedMethods())
+// app.use(admin.routes(),admin.allowedMethods())
 app.use(web.routes(),web.allowedMethods())
 
 app.listen(3000,()=>{

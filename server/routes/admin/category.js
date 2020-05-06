@@ -9,8 +9,9 @@ mongoose()
 
 //获取列表接口
 router.get('/',async (ctx,next)=>{
-  let tableDatas = await Category.find().limit(10) //limit用于分页
-  // let tableDatas = await Category.find().populate('parent').limit(10) //limit用于分页
+  console.log(ctx.url)
+  // let tableDatas = await Category.find().limit(10) //limit用于分页
+  let tableDatas = await Category.find().populate('parent').limit(10) //limit用于分页
   // console.log(tableDatas)
   ctx.body = tableDatas
 })

@@ -35,7 +35,7 @@ export default {
   methods:{
     async save(){  //save分为新建保存和更改保存，新建用post，更改用put
       if(this.id){
-        await this.$http.put(`/category/${this.id}`,this.model)
+        await this.$http.put(`rest/category/${this.id}`,this.model)
         this.$message({
         type:'success',
         message:'更改成功'
@@ -43,7 +43,7 @@ export default {
       }else{
         //请求接口，提交数据
         // this.$http.post('category',this.model).then(()=>{})
-        await this.$http.post('/category/create',this.model)
+        await this.$http.post('rest/category/create',this.model)
         this.$message({
         type:'success',
         message:'保存成功'
@@ -53,11 +53,11 @@ export default {
       this.$router.push('/categories/lists')     
     },
     async fetch(){
-      let res=await this.$http.get(`/category/${this.id}`) 
+      let res=await this.$http.get(`rest/category/${this.id}`) 
       this.model=res.data
     },
     async getParent(){
-      let res=await this.$http.get('/category')
+      let res=await this.$http.get('rest/category')
       this.parents=res.data
     }
   }
