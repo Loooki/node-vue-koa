@@ -4,6 +4,8 @@ import VueRouter from 'vue-router'
 import Main from '../views/Main.vue'
 import categoryEdit from '../views/categoryEdit.vue'
 import categoryLists from '../views/categoryLists.vue'
+import equipmentEdit from '../views/equipmentEdit.vue'
+import equipmentLists from '../views/equipmentLists.vue'
 
 Vue.use(VueRouter)
 
@@ -28,6 +30,22 @@ Vue.use(VueRouter)
         path: 'categories/lists',
         name: 'categoryLists',
         component: categoryLists,
+      },
+      {
+        path: 'equipments/create',
+        name: 'equipmentEdit',
+        component: equipmentEdit,
+      },
+      {
+        path: 'equipments/edit/:id',
+        name: 'equipmentEdit',
+        component: equipmentEdit,
+        props: true //表示把路由参数id注入到组件equimentEdit中，组件可食用props属性接收
+      },
+      {
+        path: 'equipments/lists',
+        name: 'equipmentLists',
+        component: equipmentLists,
       }
     ]
   }

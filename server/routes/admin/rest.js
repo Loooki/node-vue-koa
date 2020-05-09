@@ -34,13 +34,13 @@ router.delete('/:id', async (ctx, next) => {
 })
 //创建分类接口
 router.post('/:id', async (ctx, next) => {
-  let modelName = require('inflection').classify(ctx.params.source)
-  const Model = require(`../../models/${modelName}`)
+  console.log('in')
   //向数据库创建数据
-  let data = await cxt.Model.create(ctx.request.body)
+  let data = await ctx.Model.create(ctx.request.body)
   // //获取表单提交的数据，响应给前端
-  // console.log(data)
+  console.log(data)
   ctx.body = data
+  console.log(ctx.body)
 })
 
 

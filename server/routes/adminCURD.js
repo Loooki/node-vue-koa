@@ -1,11 +1,13 @@
 const router=require('koa-router')()
 const rest=require('./admin/rest.js')
+const upload = require('./admin/upload.js')
 
 router.prefix('/admin/api')
 
 router.get('/',(ctx,next)=>{
   ctx.body="admin"
 })
+// router.use('/upload',upload.routes())
 
 //链式按序处理，所以挂在rea.Model应在rest.routes()之前，以使用Model模型
 // router.use('/rest/:source', rest.routes())
@@ -14,7 +16,7 @@ router.use('/rest/:source', async (ctx, next) => {
         let modelName = require('inflection').classify(ctx.params.source)
         ctx.Model = require(`../models/${modelName}`)
         await next()
-    },rest.routes()) 
+    },rest.routes())  
 
 
 module.exports=router
