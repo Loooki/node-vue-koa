@@ -9,7 +9,7 @@ const koaBody = require('koa-body')
 const app = new Koa()
 
 //配置post bodyparser中间件
-app.use(bodyParser());
+// app.use(bodyParser());
 
 //跨域中间件
 app.use(cors())
