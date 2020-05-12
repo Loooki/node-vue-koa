@@ -4,8 +4,11 @@
     <el-table :data="tableDatas">
       <el-table-column prop="_id" label="ID" width="200"> </el-table-column>
       <el-table-column prop="name" label="物品名称" > </el-table-column>
-      <el-table-column prop="icon" label="物品图片" height:3rem> </el-table-column>
-     
+      <el-table-column prop="icon" label="物品图片"> 
+        <template slot-scope="scope">
+          <img :src="scope.row.icon" alt="" height="100">
+        </template>
+      </el-table-column>   
       <el-table-column fixed="right" label="操作" width="188">
           <template slot-scope="scope">
               <el-button @click="$router.push(`/equipments/edit/${scope.row._id}`)" type="primary" size="small">编辑</el-button>

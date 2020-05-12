@@ -6,6 +6,10 @@ import categoryEdit from '../views/categoryEdit.vue'
 import categoryLists from '../views/categoryLists.vue'
 import equipmentEdit from '../views/equipmentEdit.vue'
 import equipmentLists from '../views/equipmentLists.vue'
+import heroEdit from '../views/heroEdit.vue'
+import heroLists from '../views/heroLists.vue'
+import articleEdit from '../views/articleEdit.vue'
+import articleLists from '../views/articleLists.vue'
 
 Vue.use(VueRouter)
 
@@ -46,6 +50,38 @@ Vue.use(VueRouter)
         path: 'equipments/lists',
         name: 'equipmentLists',
         component: equipmentLists,
+      },
+      {
+        path: 'heroes/create',
+        name: 'heroEdit',
+        component: heroEdit,
+      },
+      {
+        path: 'heroes/edit/:id',
+        name: 'heroEdit',
+        component: heroEdit,
+        props: true //表示把路由参数id注入到组件heroEdit中，组件可使用props属性接收
+      },
+      {
+        path: 'heroes/lists',
+        name: 'heroLists',
+        component: heroLists,
+      },
+      {
+        path: 'articles/create',
+        name: 'articleEdit',
+        component: articleEdit,
+      },
+      {
+        path: 'articles/edit/:id',
+        name: 'articleEdit',
+        component: articleEdit,
+        props: true //表示把路由参数id注入到组件articleEdit中，组件可使用props属性接收
+      },
+      {
+        path: 'articles/lists',
+        name: 'articleLists',
+        component: articleLists,
       }
     ]
   }

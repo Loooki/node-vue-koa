@@ -1,7 +1,6 @@
 const router=require('koa-router')()
 const rest=require('./admin/rest.js')
 const upload = require('./admin/upload.js')
-// const koaBody = require('koa-body')
 
 router.prefix('/admin/api')
 

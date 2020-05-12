@@ -12,8 +12,8 @@ router.get('/',async (ctx,next)=>{
   let queryOptions={}
   if(ctx.Model.modelName == 'Category'){
     queryOptions.populate='parent'
-  }
-  let tableDatas = await ctx.Model.find().setOptions(queryOptions).limit(10) //limit用于分页
+  } 
+  let tableDatas = await ctx.Model.find().setOptions(queryOptions).limit(20) //limit用于分页
   ctx.body = tableDatas
 })
 //编辑分类接口
@@ -34,13 +34,12 @@ router.delete('/:id', async (ctx, next) => {
 })
 //创建分类接口
 router.post('/:id', async (ctx, next) => {
-  console.log('in')
   //向数据库创建数据
   let data = await ctx.Model.create(ctx.request.body)
   // //获取表单提交的数据，响应给前端
-  console.log(data)
+  // console.log(data)
   ctx.body = data
-  console.log(ctx.body)
+  // console.log(ctx.body)
 })
 
 

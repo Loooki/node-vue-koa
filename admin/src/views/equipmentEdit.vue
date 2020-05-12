@@ -34,7 +34,7 @@
         },
         methods: {
             handleSuccess(res) {
-              console.log(res)
+            //   console.log(res)
                 // this.model.icon=res vue给数据赋值，如果对象为空，不能添加属性直接赋值，用$set
                  this.$set(this.model, 'icon', res)
                 //  console.log(this.model)

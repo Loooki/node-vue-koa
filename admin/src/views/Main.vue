@@ -14,6 +14,16 @@
                       <el-menu-item index="/equipments/create">新增物品</el-menu-item>
                       <el-menu-item index="/equipments/lists">物品列表</el-menu-item>
                   </el-menu-item-group>
+                  <el-menu-item-group>
+                      <template slot="title">英雄</template>
+                      <el-menu-item index="/heroes/create">新增英雄</el-menu-item>
+                      <el-menu-item index="/heroes/lists">英雄列表</el-menu-item>
+                  </el-menu-item-group>
+                  <el-menu-item-group>
+                      <template slot="title">文章</template>
+                      <el-menu-item index="/articles/create">新增文章</el-menu-item>
+                      <el-menu-item index="/articles/lists">文章列表</el-menu-item>
+                  </el-menu-item-group>
               </el-submenu>
           </el-menu>
       </el-aside>

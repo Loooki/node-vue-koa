@@ -10,6 +10,7 @@ mongoose()
 router.post('/', async (ctx) => {
   // 上传单个文件
   const file = ctx.request.files.file; // 获取上传文件
+  //  file.url = `http://localhost:3000/upload/${file.name}`
   // 创建可读流
   const reader = fs.createReadStream(file.path);
   let filePath = path.join(__dirname, '../../static/upload') + `/${file.name}`;
@@ -19,7 +20,9 @@ router.post('/', async (ctx) => {
   reader.pipe(upStream);
 
   file.url = `http://localhost:3000/upload/${file.name}`
+  // console.log(file)
    ctx.body = file.url;
+  //  ctx.body = file;
 })
 
 

@@ -3,19 +3,14 @@
     <h1>列表</h1>
     <el-table :data="tableDatas">
       <el-table-column prop="_id" label="ID" width="200"> </el-table-column>
-      <el-table-column prop="name" label="分类名称" > </el-table-column>
-      <el-table-column prop="parent.name" label="上级分类" > </el-table-column>
+      <el-table-column prop="title" label="文章标题" > </el-table-column>
       <el-table-column fixed="right" label="操作" width="188">
           <template slot-scope="scope">
-              <el-button @click="$router.push(`/categories/edit/${scope.row._id}`)" type="primary" size="small">编辑</el-button>
+              <el-button @click="$router.push(`/articles/edit/${scope.row._id}`)" type="primary" size="small">编辑</el-button>
               <el-button @click="remove(scope.row)" type="primary" size="small">删除</el-button>
           </template>
       </el-table-column>
     </el-table>
-    <el-pagination 
-    :page-sizes="pageSizes"
-    background layout="prev, pager, next" :total="Total">
-    </el-pagination>
   </div>
 </template>
 
@@ -23,9 +18,7 @@
 export default {
   data(){
     return{
-      tableDatas:[],
-      pageSizes:[],
-      Total:0
+      tableDatas:[]
     }
   },
   created(){
@@ -35,16 +28,17 @@ export default {
   methods:{
     //获取列表数据
     async fetch(){
-       let tableDatas= await this.$http.get('/rest/category')
-       this.tableDatas=tableDatas.data       
+       let tableDatas= await this.$http.get('/rest/article')
+       this.tableDatas=tableDatas.data    
+       console.log(this.tableDatas)   
     },
     async remove(row){
-      this.$confirm(`是否要删除分类"${row.name}"`, '提示', {
+      this.$confirm(`是否要删除文章"${row.title}"`, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
         }).then(async() => {
-          await this.$http.delete(`rest/category/${row._id}`)
+          await this.$http.delete(`rest/article/${row._id}`)
           this.$message({
             type: 'success',
             message: '删除成功!'
