@@ -72,8 +72,8 @@
                             </el-form-item>
                             <el-form-item label="图标">
                                 <el-upload class="avatar-uploader" :action="$http.defaults.baseURL+'/upload'" :show-file-list="false" :on-success="res=>{$set(item, 'icon', res)}">
-                                    <img v-if="item.icon" :src="item.icon" class="avatar">
-                                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                                    <img v-if="item.icon" :src="item.icon" class="avatar1">
+                                    <i v-else class="el-icon-plus avatar-uploader-icon1"></i>
                                 </el-upload>
                             </el-form-item>
                             <el-form-item label="技能描述">
@@ -169,20 +169,8 @@
     }
 
 </script>
-<style>
-    .avatar-uploader .el-upload ,.icon-uploader .el-upload{
-        border: 1px dashed #d9d9d9;
-        border-radius: 6px;
-        cursor: pointer;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .avatar-uploader .el-upload:hover {
-        border-color: #409EFF;
-    }
-
-    .avatar-uploader-icon {
+<style scoped>
+    .avatar-uploader-icon1 {
         font-size: 28px;
         color: #8c939d;
         width: 5rem;
@@ -190,7 +178,7 @@
         line-height: 5rem;
         text-align: center;
     }
-    .avatar {
+    .avatar1 {
         width: 5rem;
         height: 5rem;
         display: block;
