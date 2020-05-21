@@ -1,5 +1,6 @@
 import axios from 'axios'
 import Vue from 'vue'
+import router from './router/index.js'
 
 //创建axios实例
 const http=axios.create({
@@ -29,6 +30,11 @@ http.interceptors.response.use(res=>{
     Vue.prototype.$message({
         message:err.response.data
     })
+    //根据错误状态码进行操作，如果用户名不存在跳转到登录也
+    if(err.response.status === 401){
+      router.push('/login')
+    }
+    
   } 
   return Promise.reject(err)
 })

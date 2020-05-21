@@ -5,8 +5,9 @@ const static=require('koa-static')
 const adminCURD = require('./routes/adminCURD')
 const web=require('./routes/web')
 const koaBody = require('koa-body')
-const jwt=require('jsonwebtoken')
+// const jwt=require('jsonwebtoken')
 const Adminuser=require('./models/Adminuser')
+// const assert = require('http-assert')
 
 const app = new Koa()
 
@@ -43,19 +44,25 @@ app.use(async (ctx,next)=>{
   await next()
 })
 
-//校验token中间件
-app.use(async (ctx,next)=>{
-  // const token=ctx.headers.authorization
-  const token=String(ctx.headers.authorization || '').split(' ').pop()
+// //校验token中间件
+// app.use(async (ctx,next)=>{
+//   // const token=ctx.headers.authorization
+//   const token=String(ctx.headers.authorization || '').split(' ').pop()
 
-  //得到请求头的token,进行解码
-  // let tokenData=jwt.verify(token,ctx.state.secret)
-  let { id }=jwt.verify(token,ctx.state.secret)  //es6解构
-  //数据库中查找用户并挂在到ctx,以便后续路由查找
-  ctx.user=await Adminuser.findById(id)
-  // console.log(ctx.user)
-  await next()
-})
+//   assert(token,401,'请提供token，请先登录')
+
+//   //得到请求头的token,进行解码
+//   // let tokenData=jwt.verify(token,ctx.state.secret)
+//   let { id }=jwt.verify(token,ctx.state.secret)  //es6解构
+//   assert(id,401,'用户名不存在')
+
+//   //数据库中查找用户并挂在到ctx,以便后续路由查找
+//   ctx.user=await Adminuser.findById(id)
+//   assert(id, 401, '用户名不存在')
+
+//   // console.log(ctx.user)
+//   await next()
+// })
    
 app.use(adminCURD.routes(),adminCURD.allowedMethods())
 app.use(web.routes(),web.allowedMethods())

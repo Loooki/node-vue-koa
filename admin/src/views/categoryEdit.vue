@@ -51,6 +51,7 @@
                     }) 
                 }
                 //跳转页面
+                console.log(this)
                 this.$router.push('/categories/lists')
             },
             async fetch() {

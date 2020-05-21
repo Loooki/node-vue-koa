@@ -3,6 +3,7 @@ const rest=require('./admin/rest.js')
 const upload = require('./admin/upload.js')
 const bcrypt = require ('bcrypt')
 const assert = require('http-assert')
+const authMiddleware=require('../middleware/auth')()
 
 router.prefix('/admin/api')
 
@@ -19,7 +20,6 @@ router.post('/login',async (ctx)=>{
   //用assert替下面的抛出错误
   assert(user, 422, '用户不存在')  //assert(不抛错的条件，状态码，抛出错误信息)  不符合条件即抛错
   // if(!user){
-  //   console.log('in')
   //   ctx.status=422
   //   ctx.body = { message: '用户不存在' }
   //   return
@@ -39,11 +39,11 @@ router.post('/login',async (ctx)=>{
   ctx.body=token
 })
 
-router.use('/upload',upload.routes())
+router.use('/upload', authMiddleware, upload.routes())
 
 //链式按序处理，所以挂在rea.Model应在rest.routes()之前，以使用Model模型
 // router.use('/rest/:source', rest.routes())
-router.use('/rest/:source', async (ctx, next) => {
+router.use('/rest/:source', authMiddleware, async (ctx, next) => {
         //每次请求接口都要调用，封装到中间件内,ctx.Model表示给请求参数挂在一个model属性，否则单独let model=require(`../models/${modelName}`) 后面rest.routes()方法访问不到
         let modelName = require('inflection').classify(ctx.params.source)
         ctx.Model = require(`../models/${modelName}`)
