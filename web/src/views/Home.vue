@@ -13,13 +13,16 @@
     <div class="bar text-center fs-md bg-light py-2" @click="showMore">{{showText}}</div>
     <!-- nav end -->
     <!-- news start -->
-    <Card :info="cardTitles[0]" class="bg-white mt-3">
+    <ListCard :info="cardTitles[0]" :contents="news_contents" :titles="news_titles">
+      aaa
+    </ListCard>
+    <!-- <Card :info="cardTitles[0]" class="bg-white mt-3">
       <Textswiper :contents="news_contents" :titles="news_titles">
       </Textswiper>
-    </Card>
+    </Card> -->
     <!-- news end -->
     <!-- hero start -->
-    <Card :info="cardTitles[1]" class="bg-white mt-3">
+    <!-- <Card :info="cardTitles[1]" class="bg-white mt-3">
       <div>
         <a href="">
           <img src="" alt="">
@@ -27,7 +30,7 @@
       </div>
       <Imgswiper :contents="heros_contents" :titles="heros_titles">
       </Imgswiper>
-    </Card>
+    </Card> -->
     <br/>
     <br/>
     <br/>
@@ -51,11 +54,13 @@
 </template>
 <script>
 import Carousel from '../components/Carousel'
-import Card from '../components/Card'
-import Textswiper from '../components/Textswiper'
-import Imgswiper from '../components/Imgswiper'
+// import Card from '../components/Card'
+// import ListCard from '../components/ListCard'
+// import Textswiper from '../components/Textswiper'
+// import Imgswiper from '../components/Imgswiper'
 export default {
-  components:{Carousel,Card,Textswiper,Imgswiper},
+  // components:{Carousel,Card,Textswiper,Imgswiper},
+  components:{Carousel},
   data(){
     return{
       bannerLists:[require('../assets/images/1.jpg'), require('../assets/images/2.jpg'), require('../assets/images/3.jpg')],

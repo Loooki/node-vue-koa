@@ -11,6 +11,12 @@ Vue.config.productionTip = false
 import './style.scss'
 import './assets/iconfont/iconfont.css'
 
+import Card from './components/Card.vue'
+Vue.component('my-card',Card)
+
+import ListCard from './components/ListCard.vue'
+Vue.component('list-card', ListCard)
+
 new Vue({
   router,
   render: h => h(App),
