@@ -1,12 +1,10 @@
 <template>
-  <div v-swiper:mySwiper="swiperOption">
-      <div class="swiper-wrapper">
-          <div class="swiper-slide" :key="banner" v-for="banner in banners">
-              <img :src="banner">
-          </div>
-      </div>
-      <div class="swiper-pagination"></div>
-  </div>
+  <swiper :options="swiperOption">
+    <swiper-slide :key="banner" v-for="banner in banners">
+      <img :src="banner">
+    </swiper-slide>
+      <div class="swiper-pagination" slot="pagination"></div>
+  </swiper> 
 </template>
 <script>
 export default {

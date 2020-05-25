@@ -29,24 +29,25 @@ export default {
     return{
       tableDatas:[],
       datas:[],
-      pageSizes:[10, 20, 30, 40, 50, 100],
-      pageSize:10, //每页展示数据条数
       Total:0, //总数据条数
-      pageNum:1 //当前页数
+      pageSizes:[10, 20, 30, 40, 50, 100],
+      formPage:{
+        pageSize:10, //每页展示数据条数
+        pageNum:1 //当前页数
+      }  
     }
   },
   created(){
     //获取列表数据
-    this.fetch()
+    this.fetch(this.formPage)
   },
   methods:{
-    //获取列表数据
-    async fetch(){
-       let tableDatas= await this.$http.get('/rest/category')
+    //获取列表数据，后端分页
+    async fetch(obj){
+       let tableDatas= await this.$http.post('/rest/category',obj)
        this.datas=tableDatas.data
-       //数据量小，前端分页
-       this.tableDatas=this.datas.slice((this.pageNum-1)*this.pageSize,(this.pageNum*this.pageSize))
        this.Total= this.datas.length
+       this.tableDatas=tableDatas.data
     },
     async remove(row){
       this.$confirm(`是否要删除分类"${row.name}"`, '提示', {
@@ -59,7 +60,7 @@ export default {
             type: 'success',
             message: '删除成功!'
           });
-          this.fetch()
+          this.fetch(this.formPage)
         }).catch(() => {
           this.$message({
             type: 'info',
@@ -68,12 +69,13 @@ export default {
       });  
     },
     sizeChange(val){
-      this.pageSize=val
-      this.fetch()
+      this.formPage.pageSize=val
+      this.fetch(this.formPage)
+      this.formPage.pageNum=1
     },
     currentChange(val){
-      this.pageNum=val
-      this.fetch()
+      this.formPage.pageNum=val
+      this.fetch(this.formPage)
     }
   }
 }

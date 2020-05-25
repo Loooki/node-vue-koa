@@ -16,6 +16,8 @@
           </template>
       </el-table-column>
     </el-table>
+    <el-pagination :page-sizes="pageSizes" :current-page="pageNum" :page-size="pageSize" @size-change="sizeChange" @current-change="currentChange" background layout="total, prev, pager, sizes, next" :total="Total">
+    </el-pagination>
   </div>
 </template>
 
@@ -23,7 +25,12 @@
 export default {
   data(){
     return{
-      tableDatas:[]
+      tableDatas:[],
+      datas:[],
+      pageSize:10, //每页展示数据条数     
+      pageNum:1 ,//当前页数
+      Total:0, //总数据条数
+      pageSizes:[10, 20, 30, 40, 50, 100],
     }
   },
   created(){
@@ -34,7 +41,10 @@ export default {
     //获取列表数据
     async fetch(){
        let tableDatas= await this.$http.get('/rest/equipment')
-       this.tableDatas=tableDatas.data       
+       this.datas=tableDatas.data
+       //数据量小，前端分页
+       this.tableDatas=this.datas.slice((this.pageNum-1)*this.pageSize,(this.pageNum*this.pageSize))
+       this.Total= this.datas.length
     },
     async remove(row){
       this.$confirm(`是否要删除分类"${row.name}"`, '提示', {
@@ -54,6 +64,14 @@ export default {
             message: '已取消删除'
         });
       });  
+    },
+    sizeChange(val){
+    this.pageSize=val
+    this.fetch()
+    },
+    currentChange(val){
+    this.pageNum=val
+    this.fetch()
     }
   }
 }

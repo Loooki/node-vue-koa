@@ -42,9 +42,7 @@
                     })
                 } else {
                     //请求接口，提交数据
-                    console.log('in')
                     await this.$http.post('rest/category/create',this.model)
-                    console.log('out')
                     this.$message({
                         type: 'success',
                         message: '保存成功' 

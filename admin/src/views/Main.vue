@@ -1,7 +1,7 @@
 <template>
   <el-container style="height: 100vh; border: 1px solid #eee">
       <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-          <el-menu router :default-openeds="['3']" :default-active="$route.path" unique-opened>
+          <el-menu router :default-openeds="[defaultOpends]" :default-active="$route.path" unique-opened @open="handleOpen">
               <el-submenu index="1">
                   <template slot="title"><i class="el-icon-message"></i>内容管理</template>
                   <el-menu-item-group>
@@ -45,7 +45,7 @@
       </el-aside>
       <el-container>
           <el-main>
-              <router-view></router-view>
+              <router-view :key="$route.path"></router-view>
           </el-main>
       </el-container>
   </el-container>
@@ -68,8 +68,14 @@
     export default {
         data() {
            return{
-            
+            defaultOpends:"1"
            }
+        },
+        methods:{
+            handleOpen(key){
+                // console.log(key, keyPath)
+                this.defaultOpends=key
+            }
         }
     };
 </script>

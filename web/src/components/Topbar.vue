@@ -15,6 +15,9 @@ export default {
 </script>
 <style lang="scss">
     .topbar {
+        position:sticky;  //不支持的话改用fixed
+        top:0;
+        z-index:999;
         img {
             width: 2.3077rem;
             height: 2.3077rem;

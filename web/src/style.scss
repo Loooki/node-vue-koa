@@ -50,6 +50,11 @@ a{
   text-decoration: none;
   color:#333;
 }
+.text-overflow{
+  text-overflow:ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
 
 //网站颜色和字体定义（color,text）
 
