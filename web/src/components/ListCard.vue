@@ -6,7 +6,7 @@
     </div>
     <div v-swiper:mySwiper="swiperOption" class="mx-4" ref="mySwiper">
         <div class="swiper-wrapper">
-            <div class="swiper-slide  d-flex jc-between text-center flex-wrap" :key="content.key" v-for="content in contents">
+            <div class="swiper-slide  d-flex  text-center flex-wrap" :key="content.categoryName" v-for="content in contents">
                 <!-- 具名插槽，将数据回传 -->
                 <slot name="items" :datas="content"></slot>
             </div>
@@ -26,6 +26,7 @@ export default {
       active:0,
       swiperOption: {
         loop:false,
+        autoHeight:true,
         on:{
           slideChangeTransitionEnd(){
             // console.log(this.activeIndex)

@@ -13,7 +13,7 @@ router.get('/',async (ctx,next)=>{
   if(ctx.Model.modelName == 'Category'){
     queryOptions.populate='parent'
   } 
-  let tableDatas = await ctx.Model.find().setOptions(queryOptions).limit(20) //limit用于分页
+  let tableDatas = await ctx.Model.find().setOptions(queryOptions).limit(100) //limit用于分页
   ctx.body = tableDatas
 })
 //编辑分类接口
