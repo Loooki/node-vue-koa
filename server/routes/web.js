@@ -153,6 +153,27 @@ router.get('/heroes/list',async ctx=>{
     ctx.body = lists
 })
 
+//文章详情接口
+router.get('/articles/:id',async ctx=>{
+    let data=await Article.findOne({_id:ctx.params.id}).lean()
+    
+    data.related=await Article.find().where({
+        categories:{ $in : data.categories },
+        title:{ $ne :data.title } //不包含本身
+    }).limit(2)
+    
+    // console.log(data)
+
+    ctx.body=data
+})
+
+//英雄详情接口
+router.get('/heroes/:id',async ctx=>{
+    let data=await Hero.findOne({_id:ctx.params.id}).lean()
+    ctx.body=data
+    // console.log(data)
+})
+
 module.exports = router
 
 

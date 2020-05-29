@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="home">
     <Carousel :banners="bannerLists"></Carousel>
     <!-- nav start -->
     <div class="navicons d-flex bg-white jc-between flex-wrap mt-3 pt-3 text-center fs-xs">
@@ -17,11 +17,11 @@
       <!-- 插槽内容 -->
       <template #items="{datas}">
        <div class="content py-2" style="width:100%" :key="i" v-for="(item,i) in datas.newsLists">
-          <a href="" class="d-flex ai-center text-left">
+          <router-link :to="`articles/${item._id}`" tag="div" class="d-flex ai-center text-left">
             <div>[{{item.categoryName}}]</div>
             <div class="flex-1 text-overflow">{{item.title}}</div>
             <div>{{item.createdAt | formatDate}}</div>
-          </a>
+          </router-link>
        </div>
       </template>
     </list-card>
@@ -31,11 +31,11 @@
          <!-- 插槽内容 -->
          <template #items="{datas}">
            <div class="d-flex flex-wrap" style="margin:0 -0.5rem">
-             <div class="herocontent p-2 " :key="item.id" v-for="item in datas.heroesLists">
-                 <a href="">
+             <div class="herocontent p-2 " :key="item._id" v-for="item in datas.heroesLists">
+                 <router-link :to="`/heroes/${item._id}`" tag="div">
                      <img :src="item.avator" alt="">
                      <div>{{item.name}}</div>
-                 </a>
+                 </router-link>
             </div>
            </div>
          </template>
@@ -90,7 +90,7 @@ export default {
         },
         {
           title:'英雄列表',
-          icon:'superhero'
+          icon:'-superhero'
         },
         {
           title:'精彩视频',

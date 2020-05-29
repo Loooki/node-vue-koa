@@ -4,6 +4,7 @@ let HeroSchema=new mongoose.Schema({
     type:String
   },
   avator: { type: String },
+  banner: { type: String },
   title: { type: String },
   categories:[{type:mongoose.SchemaTypes.ObjectId}],
   scores:{

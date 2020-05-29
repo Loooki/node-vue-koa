@@ -25,6 +25,7 @@ router.get('/:id', async (ctx, next) => {
 //更新分类详情接口
 router.put('/:id', async (ctx, next) => {
     let data = await ctx.Model.findByIdAndUpdate(ctx.params.id,ctx.request.body) 
+    // console.log(data)
     ctx.body = data
 })
 //删除分类详情
