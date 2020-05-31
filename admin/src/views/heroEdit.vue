@@ -56,6 +56,15 @@
                             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                         </el-upload>
                     </el-form-item>
+                    <el-form-item label="皮肤">
+                        <el-upload :action="$http.defaults.baseURL+'/upload'" 
+                        :headers="getAuthHeaders()" list-type="picture-card" :on-preview="handlePictureCardPreview" :on-remove="handleRemove">
+                            <i class="el-icon-plus"></i>
+                        </el-upload>
+                        <el-dialog :visible.sync="dialogVisible">
+                            <img width="100%" :src="model.skins" alt="">
+                        </el-dialog>
+                    </el-form-item>
                     <el-form-item label="使用技巧">
                         <el-input type="textarea" v-model="model.usageTips" :rows="4" aria-placeholder="请输入内容"></el-input>
                     </el-form-item>
@@ -65,13 +74,13 @@
                     <el-form-item label="团战思路">
                         <el-input type="textarea" v-model="model.teamTips" :rows="4" aria-placeholder="请输入内容"></el-input>
                     </el-form-item>
-                    <el-form-item label="最佳搭档">
+                    <!-- <el-form-item label="最佳搭档">
                         <el-select v-model="model.partners.hero" placeholder="请选择">
                             <el-option v-for="item in heroes" :key="item._id" :label="item.name" :value="item._id">
                             </el-option>
                         </el-select>
                         <el-input style="margin-top:1rem" v-model="model.partners.description" type="textarea" :rows="4" placeholder="请输入内容"></el-input>
-                    </el-form-item>
+                    </el-form-item> -->
                 </el-tab-pane>
                 <el-tab-pane label="技能" name="skills">
                     <el-button size="small" @click="model.skills.push({})"><i class="el-icon-plus"></i>增加技能</el-button>
@@ -96,7 +105,33 @@
                             </el-form-item>
                         </el-col>
                     </el-row>
-
+                </el-tab-pane>
+                <el-tab-pane label="最佳搭档" name="partner">
+                    <!-- <el-button type="small" @click="model.partners.push({})">
+                        <i class="el-icon-plus"></i>增加拍档</el-button>
+                    <el-row type="flex" style="flex-wrap:wrap">
+                        <el-col :md="12" v-for="(item,i) in model.partners" :key="i">
+                            <el-form-item label="搭档">
+                                <el-select  v-model="item.hero" placeholder="请选择">
+                                    <el-option v-for="item in heroes" :key="item._id" :label="item.name" :value="item._id">
+                                    </el-option>
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item label="描述">
+                                <el-input style="margin-top:1rem" v-model="item.description" type="textarea" :rows="4" placeholder="请输入内容"></el-input>
+                            </el-form-item>
+                            <el-form-item>
+                                <el-button @click="removePartner(i)" size="small" type="danger">删除该拍档 </el-button>
+                            </el-form-item>
+                        </el-col>
+                    </el-row> -->
+                    <HeroRelation :contents="model.partners" :heros="heroes"></HeroRelation>
+                </el-tab-pane>
+                <el-tab-pane label="被谁克制" name="opponents">
+                    <HeroRelation :contents="model.opponents" :heros="heroes"></HeroRelation>
+                </el-tab-pane>
+                <el-tab-pane label="克制谁" name="controllers">
+                    <HeroRelation :contents="model.controllers" :heros="heroes"></HeroRelation>
                 </el-tab-pane>
             </el-tabs>
 
@@ -108,8 +143,9 @@
 
 </template>
 <script>
+    import HeroRelation from '../components/HeroRelation'
     export default {
-        // props:{id:{}},
+        components:{HeroRelation},
         props: ['id'], //接收路由参数，this.$toute.params.id效果一致
         data() {
             return {
@@ -122,7 +158,8 @@
                 },
                 categories: [],
                 equipments: [],
-                heroes: []
+                heroes: [],
+                dialogVisible:false
                 // parents:[]
             }
         },
@@ -137,6 +174,13 @@
             handleSuccess(res) {
                 // this.model.icon=res vue给数据赋值，如果对象为空，不能添加属性直接赋值，用$set
                 this.$set(this.model, 'avator', res)
+            },
+            handleRemove(file, fileList) {
+                console.log(file, fileList);
+            },
+            handlePictureCardPreview(file) {
+                this.model.skins = file.url;
+                this.dialogVisible = true;
             },
             async save() { //save分为新建保存和更改保存，新建用post，更改用put
                 if (this.id) {
@@ -176,25 +220,19 @@
             },
             async removeSkill(index){
                 this.model.skills.splice(index,1)
-            }
+            },
+            async removePartner(index){
+                this.model.skills.splice(index,1)
+            },
+            async removeSkill(index){
+                this.model.partners.splice(index,1)
+            },
 
         }
     }
 
 </script>
 <style scoped>
-    .avatar-uploader-icon1 {
-        font-size: 28px;
-        color: #8c939d;
-        width: 5rem;
-        height: 5rem;
-        line-height: 5rem;
-        text-align: center;
-    }
-    .avatar1 {
-        width: 5rem;
-        height: 5rem;
-        display: block;
-    }
+   
 
 </style>

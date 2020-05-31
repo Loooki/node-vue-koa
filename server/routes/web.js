@@ -169,7 +169,14 @@ router.get('/articles/:id',async ctx=>{
 
 //英雄详情接口
 router.get('/heroes/:id',async ctx=>{
-    let data=await Hero.findOne({_id:ctx.params.id}).lean()
+    let data = await Hero.findOne({ _id: ctx.params.id })
+    .populate('categories')
+    .populate('equipments1')
+    .populate('equipments2')
+    .populate('partners.hero')
+    .populate('opponents.hero')
+    .populate('controllers.hero')
+    .lean()
     ctx.body=data
     // console.log(data)
 })
