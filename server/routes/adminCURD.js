@@ -1,6 +1,7 @@
 const router=require('koa-router')()
 const rest=require('./admin/rest.js')
 const upload = require('./admin/upload.js')
+const uploadToken = require('./admin/uploadToken.js')
 const bcrypt = require ('bcrypt')
 const assert = require('http-assert')
 const authMiddleware=require('../middleware/auth')()
@@ -40,6 +41,9 @@ router.post('/login',async (ctx)=>{
 })
 
 router.use('/upload', authMiddleware, upload.routes())
+
+//上传七牛token接口
+router.use('/uploadToken', authMiddleware, uploadToken.routes())
 
 //链式按序处理，所以挂在rea.Model应在rest.routes()之前，以使用Model模型
 // router.use('/rest/:source', rest.routes())

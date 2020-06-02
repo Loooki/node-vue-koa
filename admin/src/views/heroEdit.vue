@@ -221,12 +221,12 @@
             async removeSkill(index){
                 this.model.skills.splice(index,1)
             },
-            async removePartner(index){
-                this.model.skills.splice(index,1)
-            },
-            async removeSkill(index){
-                this.model.partners.splice(index,1)
-            },
+            // async removePartner(index){
+            //     this.model.partnerss.splice(index,1)
+            // },
+            // async removeSkill(index){
+            //     this.model.partners.splice(index,1)
+            // },
 
         }
     }

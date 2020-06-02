@@ -6,12 +6,7 @@
                 <el-input v-model="model.name"></el-input>
             </el-form-item>
             <el-form-item label="图标">
-                <el-upload class="avatar-uploader" :action="$http.defaults.baseURL+'/upload'" :show-file-list="false" 
-                :headers="getAuthHeaders()"
-                :on-success="handleSuccess">
-                    <img v-if="model.icon" :src="model.icon" class="avatar">
-                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                </el-upload>
+                <uploadImage @getFromChild="getValue" :icon="model.icon"></uploadImage>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" native-type="submit">保存</el-button>
@@ -21,25 +16,24 @@
 
 </template>
 <script>
+    import uploadImage from '../components/uploadImage'
     export default {
         // props:{id:{}},
+        components:{uploadImage},
         props: ['id'], //接收路由参数，this.$toute.params.id效果一致
         data() {
             return {
-                model: {},
-                // parents:[]
+                model: {
+                    icon:''
+                },
             }
         },
         created() {
             this.id && this.fetch()
-            // this.getParent()
         },
         methods: {
-            handleSuccess(res) {
-            //   console.log(res)
-                // this.model.icon=res vue给数据赋值，如果对象为空，不能添加属性直接赋值，用$set
-                 this.$set(this.model, 'icon', res)
-                //  console.log(this.model)
+            getValue(val){
+                this.$set(this.model, 'icon', val)
             },
             async save1() { //save分为新建保存和更改保存，新建用post，更改用put
                 if (this.id) {
