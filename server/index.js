@@ -8,6 +8,7 @@ const koaBody = require('koa-body')
 // const jwt=require('jsonwebtoken')
 const Adminuser=require('./models/Adminuser')
 // const assert = require('http-assert')
+const mount=require('koa-mount')
 
 const app = new Koa()
 
@@ -36,6 +37,9 @@ app.use(cors())
 
 //静态资源服务中间件
 app.use(static(__dirname + '/static'))
+app.use(static(__dirname + '/web'))
+//koa-mount把中间件挂载到一个特定的路径上，中间件独立于这个路径动作。
+app.use(mount('/admin', static(__dirname + '/admin')))
 
 
 //全局设置密钥，用于token生成，第一个参数固定，第二个自定义，实际应配置在环境变量中

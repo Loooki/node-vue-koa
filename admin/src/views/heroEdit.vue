@@ -41,20 +41,10 @@
                         </el-select>
                     </el-form-item>
                     <el-form-item label="头像">
-                        <el-upload class="avatar-uploader" :action="$http.defaults.baseURL+'/upload'" :show-file-list="false" 
-                        :headers="getAuthHeaders()"
-                        :on-success="handleSuccess">
-                            <img v-if="model.avator" :src="model.avator" class="avatar">
-                            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                        </el-upload>
+                        <uploadImage @getFromChild="getValue" :icon="model.avator"></uploadImage>
                     </el-form-item>
                     <el-form-item label="背景图">
-                        <el-upload class="avatar-uploader" :action="$http.defaults.baseURL+'/upload'" :show-file-list="false" 
-                        :headers="getAuthHeaders()"
-                        :on-success="res => $set(model,'banner',res)">
-                            <img v-if="model.banner" :src="model.banner" class="avatar">
-                            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                        </el-upload>
+                        <uploadImage @getFromChild="getValueBg" :icon="model.banner"></uploadImage>
                     </el-form-item>
                     <el-form-item label="皮肤">
                         <el-upload :action="$http.defaults.baseURL+'/upload'" 
@@ -74,13 +64,6 @@
                     <el-form-item label="团战思路">
                         <el-input type="textarea" v-model="model.teamTips" :rows="4" aria-placeholder="请输入内容"></el-input>
                     </el-form-item>
-                    <!-- <el-form-item label="最佳搭档">
-                        <el-select v-model="model.partners.hero" placeholder="请选择">
-                            <el-option v-for="item in heroes" :key="item._id" :label="item.name" :value="item._id">
-                            </el-option>
-                        </el-select>
-                        <el-input style="margin-top:1rem" v-model="model.partners.description" type="textarea" :rows="4" placeholder="请输入内容"></el-input>
-                    </el-form-item> -->
                 </el-tab-pane>
                 <el-tab-pane label="技能" name="skills">
                     <el-button size="small" @click="model.skills.push({})"><i class="el-icon-plus"></i>增加技能</el-button>
@@ -107,24 +90,6 @@
                     </el-row>
                 </el-tab-pane>
                 <el-tab-pane label="最佳搭档" name="partner">
-                    <!-- <el-button type="small" @click="model.partners.push({})">
-                        <i class="el-icon-plus"></i>增加拍档</el-button>
-                    <el-row type="flex" style="flex-wrap:wrap">
-                        <el-col :md="12" v-for="(item,i) in model.partners" :key="i">
-                            <el-form-item label="搭档">
-                                <el-select  v-model="item.hero" placeholder="请选择">
-                                    <el-option v-for="item in heroes" :key="item._id" :label="item.name" :value="item._id">
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
-                            <el-form-item label="描述">
-                                <el-input style="margin-top:1rem" v-model="item.description" type="textarea" :rows="4" placeholder="请输入内容"></el-input>
-                            </el-form-item>
-                            <el-form-item>
-                                <el-button @click="removePartner(i)" size="small" type="danger">删除该拍档 </el-button>
-                            </el-form-item>
-                        </el-col>
-                    </el-row> -->
                     <HeroRelation :contents="model.partners" :heros="heroes"></HeroRelation>
                 </el-tab-pane>
                 <el-tab-pane label="被谁克制" name="opponents">
@@ -144,8 +109,9 @@
 </template>
 <script>
     import HeroRelation from '../components/HeroRelation'
+    import uploadImage from '../components/uploadImage'
     export default {
-        components:{HeroRelation},
+        components:{HeroRelation,uploadImage},
         props: ['id'], //接收路由参数，this.$toute.params.id效果一致
         data() {
             return {
@@ -171,6 +137,12 @@
             
         },
         methods: {
+            getValue(val){
+                this.$set(this.model,'avator',val)
+            },
+            getValueBg(val){
+                this.$set(this.model,'banner',val)
+            },
             handleSuccess(res) {
                 // this.model.icon=res vue给数据赋值，如果对象为空，不能添加属性直接赋值，用$set
                 this.$set(this.model, 'avator', res)

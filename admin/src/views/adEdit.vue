@@ -14,14 +14,15 @@
                             <el-input v-model="item.url"></el-input>
                         </el-form-item>
                         <el-form-item label="图片">
-                            <el-upload 
+                            <!-- <el-upload 
                             class="avatar-uploader"
                             :action="$http.defaults.baseURL+'/upload'"
                             :headers="getAuthHeaders()"
                             :on-success="res => $set(item,'image',res)">
                             <img v-if="item.image" :src="item.image" class="avatar">
                             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                        </el-upload>
+                        </el-upload> -->
+                        <uploadImage @getFromChild="getADValue" :icon="item.image" :itemIndex="i"></uploadImage>
                         </el-form-item>
                         <el-form-item label=" ">
                             <el-button type="danger" size="small" @click="model.items.splice(i,1)">删除</el-button>
@@ -37,8 +38,9 @@
 
 </template>
 <script>
+    import uploadImage from '../components/uploadImage'
     export default {
-        // props:{id:{}},
+        components:{uploadImage},
         props: ['id'], //接收路由参数，this.$toute.params.id效果一致
         data() {
             return {
@@ -51,6 +53,11 @@
             this.id && this.fetch()
         },
         methods: {
+            getADValue(data){
+                this.model.items[data.index].image=data.val
+                // this.model.items.splice(data.index, 1, data.val)
+                console.log(this.model)      
+            },
             async save() { //save分为新建保存和更改保存，新建用post，更改用put
                 if (this.id) {
                     await this.$http.put(`rest/ad/${this.id}`, this.model)
@@ -60,9 +67,7 @@
                     })
                 } else {
                     //请求接口，提交数据
-                    console.log('in')
                     await this.$http.post('rest/ad/create',this.model)
-                    console.log('out')
                     this.$message({
                         type: 'success',
                         message: '保存成功' 

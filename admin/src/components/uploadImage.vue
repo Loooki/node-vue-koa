@@ -20,11 +20,13 @@
 <script>
 export default {
   props:{
-    icon:{type:String}
+    icon:{type:String},
+    itemIndex:{type:Number}
   },
   data() {
     return {
       limitNum:3,
+      propItem:null,
       imageUrl:'',  //传给后台的src
       upload:'https://upload-z1.qiniup.com', //七牛云的上传地址(华北)
       qiniuData:{
@@ -40,7 +42,11 @@ export default {
   methods: {
     handleSuccess(res) {
       this.imageUrl = `${this.qiniuAddr}/${res.key}`;
-      this.$emit('getFromChild',this.imageUrl)
+      if(this.itemIndex){
+        this.$emit('getFromChild',{val:this.imageUrl,index:this.itemIndex})
+      }else{
+        this.$emit('getFromChild',this.imageUrl)
+      }
     },
     handleRemove(){
       // this.imageUrl = "";

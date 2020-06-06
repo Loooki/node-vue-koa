@@ -62,14 +62,14 @@
             <h3 class="fs-xl">出装推荐</h3>
             <div class="fs-xl">顺风出装</div>
             <div class="d-flex ai-center jc-between pt-3 border">
-              <div class="px-1 text-center" v-for="item in model.equipments1"> 
+              <div class="px-1 text-center" v-for="item in model.equipments1" :key="item._id"> 
                 <img :src="item.icon" alt="">
                 <div class="py-2 fs-s">{{item.name}}</div>
               </div>
             </div>
             <div class="pt-2 fs-xl">逆风出装</div>
             <div class="d-flex ai-center jc-between border pt-3">
-              <div class="px-1 text-center" v-for="item in model.equipments2"> 
+              <div class="px-1 text-center" v-for="item in model.equipments2" :key="item._id">
                 <img :src="item.icon" alt="">
                 <p class="py-2 fs-s">{{item.name}}</p>
               </div>
